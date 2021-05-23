@@ -1,0 +1,45 @@
+from kivy.app import App
+from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.lang.builder import Builder
+from kivy.clock import Clock
+import os
+
+
+class Content(ScreenManager):
+    ...
+
+class ScreenOne(Screen):
+    def __init__(
+        self, **kwargs
+        ):
+        super(ScreenOne, self).__init__(**kwargs)
+        Clock.schedule_once(self.mudar, 1)
+
+    def mudar(
+        self, dt
+    ):
+        # with open('tudo/recepctor_inicial.txt', 'r') as f:
+        #     codico_grafico = f.read()
+        self.ids.label.text = 'Hello Teraço!'
+
+class Projeto(App):
+    def build(
+        self
+    ):
+        return Content()
+if __name__ == '__main__':
+    Projeto().run()
+    
+def arquive(*args):
+    try:
+        with open('tudo/recepctor_inicial.txt', 'r') as f:
+            codico_grafico = f.read()
+    except:
+        print('Arquivo não encontrado')
+
+    try:
+        with open('tudo/recepctor_final.kv','w') as script:
+            script.write(codico_grafico)
+        Builder.load_file('tudo/recepctor_final.kv')
+    except:
+        print('Impossivel escrever')

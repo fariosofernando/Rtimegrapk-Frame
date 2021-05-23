@@ -1,0 +1,89 @@
+#:kivy 1.4
+
+<Container>:
+    canvas.before:
+        Color:
+            rgb: 0, 0, 0
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<Catalog>:
+    language_box: language_box
+    screen_manager: screen_manager
+    auto_reload: chkbx.active
+    info_label: info_lbl
+    orientation: 'vertical'
+    ScreenManager:
+        id: scm
+        Screen:
+            name:'1'
+            canvas: 
+                Rectangle:
+                    source: 'parte_grafica/imge/theme1.png'
+                    pos: self.pos
+                    size: self.size
+            BoxLayout:
+                padding:100,100,100,200
+                GridLayout:
+                    cols: 2
+                    Label:
+                        text: "Auto renderização"
+                    CheckBox:
+                        id: chkbx
+                        active: True
+                        size_hint_x: 1
+                # Button:
+                #     size_hint: None, 1
+                #     width: '108sp'
+                #     text: 'Renderizar agora'
+                #     on_release: root.change_kv(*args)
+                    Button:
+                        text: 'Code!'
+                        on_release: scm.current = '2'
+
+        Screen:
+            name:'2'
+            BoxLayout:
+                id: reactive_layout
+                orientation: 'vertical'
+                padding: 20,30,20,30
+                canvas:
+                    Rectangle:
+                        source: 'parte_grafica/imge/theme2_fone.png'
+                        pos: self.pos
+                        size: self.size
+
+
+                # Tela grafica
+                ScreenManager:
+                    id: screen_manager
+                    Screen:
+                        name: "File"
+                        File:
+                # CUIDAD. Isto não aparece!
+                ScrollView:
+                    id: kr_scroll
+                    size_hint_y: None
+                    height: 0
+                    KivyRenderTextInput:
+                        catalog: root
+                        id: language_box
+                
+
+
+            # A messagem de erro é retornada para aqui. Fazendo com isso apareceça
+            FloatLayout:
+                size_hint: 1, None
+                height: 0
+                TextInput:
+                    id:info_lbl
+                    readonly: True
+                    font_size: '14sp'
+                    background_color: (0, 0, 0, 1)
+                    foreground_color: (1, 1, 1, 1)
+                    opacity:0
+                    size_hint: 1, None
+                    text_size: self.size
+                    height: '150pt'
+                    top: 0
